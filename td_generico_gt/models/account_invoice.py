@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
-import uuid
 from dateutil.relativedelta import relativedelta
 from datetime import timedelta
 from num2words import num2words
@@ -147,7 +145,7 @@ class AccountMoveInherited(models.Model):
             else:
                 rec.invoice_ref = '%s %s' % (rec.invoice_doc_type.name, rec.invoice_doc_number)
 
-    def post(self):
+    def _post(self, soft=False):
         for move in self:
             if not move.line_ids.filtered(lambda line: not line.display_type):
                 raise UserError(_('You need to add a line before posting.'))
@@ -176,18 +174,18 @@ class AccountMoveInherited(models.Model):
             # environment.
             if not move.invoice_date and move.is_invoice(include_receipts=True):
                 move.invoice_date = fields.Date.context_today(self)
-                move.with_context(check_move_validity=False)._onchange_invoice_date()
+                move.with_context(check_move_validity=False)
 
             # When the accounting date is prior to the tax lock date, move it automatically to the next available date.
             # /!\ 'check_move_validity' must be there since the dynamic lines will be recomputed outside the 'onchange'
             # environment.
             if (move.company_id.tax_lock_date and move.date <= move.company_id.tax_lock_date) and (
-                    move.line_ids.tax_ids or move.line_ids.tag_ids):
+                    move.line_ids.tax_ids or move.line_ids.tax_tag_ids):
                 move.date = move.company_id.tax_lock_date + timedelta(days=1)
-                move.with_context(check_move_validity=False)._onchange_currency()
+                move.with_context(check_move_validity=False)
 
         # Create the analytic lines in batch is faster as it leads to less cache invalidation.
-        self.mapped('line_ids').create_analytic_lines()
+        self.mapped('line_ids')._create_analytic_lines()
         for move in self:
             if move.auto_post and move.date > fields.Date.today():
                 raise UserError(_("This move is configured to be auto-posted on {}".format(
@@ -200,12 +198,12 @@ class AccountMoveInherited(models.Model):
 
             if move.name == '/':
                 # Get the journal's sequence.
-                sequence = move._get_sequence()
+                sequence = move._get_last_sequence()
                 if not sequence:
                     raise UserError(_('Please define a sequence on your journal.'))
 
                 # Consume a new number.
-                if move.type == 'out_invoice' or move.type == "out_refund":
+                if move.move_type == 'out_invoice' or move.move_type == "out_refund":
                     to_write['invoice_doc_type'] = sequence.l10n_latam_document_type_id
                     to_write['invoice_doc_serie'] = \
                         sequence._get_prefix_suffix(date=move.invoice_date or fields.Date.today(),
@@ -217,13 +215,13 @@ class AccountMoveInherited(models.Model):
             move.write(to_write)
 
             # Compute 'ref' for 'out_invoice'.
-            if move.type == 'out_invoice' and not move.invoice_payment_ref:
+            if move.move_type == 'out_invoice' and not move.payment_reference:
                 to_write = {
                     'invoice_payment_ref': move._get_invoice_computed_reference(),
                     'line_ids': []
                 }
                 for line in move.line_ids.filtered(
-                        lambda line: line.account_id.user_type_id.type in ('receivable', 'payable')):
+                        lambda line: line.account_id.account_type in ('asset_receivable', 'liability_payable')):
                     to_write['line_ids'].append((1, line.id, {'name': to_write['invoice_payment_ref']}))
                 move.write(to_write)
 
@@ -236,9 +234,9 @@ class AccountMoveInherited(models.Model):
 
         for move in self:
             if not move.partner_id: continue
-            if move.type.startswith('out_'):
+            if move.move_type.startswith('out_'):
                 move.partner_id._increase_rank('customer_rank')
-            elif move.type.startswith('in_'):
+            elif move.move_type.startswith('in_'):
                 move.partner_id._increase_rank('supplier_rank')
             else:
                 continue
@@ -250,9 +248,9 @@ class AccountMoveInherited(models.Model):
             # the same partner, because it's probably a double encoding of the same bill/credit note only if the two
             # invoices are validated.
             self.ensure_one()
-            if invoice.type in ('in_invoice', 'in_refund') and invoice.invoice_doc_number and invoice.invoice_doc_serie:
+            if invoice.move_type in ('in_invoice', 'in_refund') and invoice.invoice_doc_number and invoice.invoice_doc_serie:
                 res = self.env['account.move'].search([
-                    ('type', '=', invoice.type),
+                    ('move_type', '=', invoice.move_type),
                     ('invoice_doc_serie', '=', invoice.invoice_doc_serie),
                     ('invoice_doc_number', '=', invoice.invoice_doc_number),
                     ('company_id', '=', invoice.company_id.id),
@@ -277,12 +275,11 @@ class AccountMoveInherited(models.Model):
             raise UserError('No es posible anular un documento después de 2 meses de su publicación.')
         super(AccountMoveInherited, self).button_cancel()
 
-    def action_invoice_draft(self):
+    def action_post(self):
         if not self.env.user.has_group('account.group_account_user'):
             raise ValueError('No tienes permisos para cambiar a borrador')
         else:
-            super(AccountMoveInherited, self).action_invoice_draft()
-
+            super(AccountMoveInherited, self).action_post()
 
 class AccountInvoiceLine(models.Model):
     _inherit = "account.move.line"

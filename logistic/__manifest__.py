@@ -38,7 +38,7 @@
         'views/inherit_view_shipping_cost.xml',
         'views/inherit_view_sale_order_lines.xml',
         'views/conmer_views.xml',
-        'views/po_inherit_view.xml',
+        # 'views/po_inherit_view.xml',
         'views/report_alert.xml',
         'views/report_bundle.xml',
         'views/expenses_inherit_views.xml'

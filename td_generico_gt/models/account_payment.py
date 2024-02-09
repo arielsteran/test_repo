@@ -87,7 +87,7 @@ class AccountPaymentInherited(models.Model):
         string="Cuenta contable de destino"
     )
 
-    @api.depends('invoice_ids', 'payment_type', 'partner_type', 'partner_id')
+    @api.depends('line_ids', 'payment_type', 'partner_type', 'partner_id')
     def _compute_destination_account_id(self):
         for record in self:
             if record.custom_destination_account_id:

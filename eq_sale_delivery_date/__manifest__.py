@@ -8,7 +8,7 @@
 {
     'name' : 'Sale Delivery by Date',
     'category': 'Sale',
-    'version': '13.0.1.0',
+    'version': '16.0.0.0',
     'author': 'Equick ERP',
     'description': """
         This Module allows to create delivery order based on delivery date in sale order line.

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, tools, _
-from odoo.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta
-from odoo.tools.float_utils import float_is_zero
 
 
 
@@ -539,13 +537,13 @@ class StockLandedCost(models.Model):
 
         digits = self.env['decimal.precision'].precision_get('Product Price')
         towrite_dict = {}
-        for cost in self.filtered(lambda cost: cost._get_targeted_move_ids()):
+        for cost in self.filtered(lambda cost: cost.get_valuation_lines()):
             total_qty = 0.0
             total_cost = 0.0
             total_weight = 0.0
             total_volume = 0.0
             total_line = 0.0
-            all_val_line_values = cost.get_valuation_lines()
+            all_val_line_values = cost._get_targeted_move_ids()
 
             for val_line_values in all_val_line_values:
                 for cost_line in cost.cost_lines:
@@ -602,7 +600,7 @@ class StockLandedCost(models.Model):
         return True
 
     def _get_targeted_move_ids(self):
-        return self.picking_ids.move_lines
+        super()._get_targeted_move_ids()
 
 
 """
@@ -624,5 +622,5 @@ class ShippingCost(models.Model):
             ('by_current_cost_price', 'Por coste actual'), ('by_weight', 'Por peso'),
             ('by_volume', 'Por volumen')
         ],
-        default="prepared",
+        default="equal",
         string="Método de división")

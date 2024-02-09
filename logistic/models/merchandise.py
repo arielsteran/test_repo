@@ -122,7 +122,7 @@ class Merchandise(models.Model):
         product.supplier_taxes_id = self.product_dai
         factor_compute = 1.75
         for taxes in self.product_dai:
-            if taxes.group_type == "dai":
+            if taxes.amount_type == "fixed":
                 factor_compute = taxes.logistic_factor
         self.factor = factor_compute
         self.price_unit = self.real_price * self.factor

@@ -243,7 +243,7 @@ class SaleOrderLineInherit(models.Model):
         if create_po and self.order_id.create_po_bool and self.supplier_id:
             self.ensure_one()
             partner_supplier = supplierinfo.name
-            fiscal_position_id = self.env['account.fiscal.position'].sudo().get_fiscal_position(partner_supplier.id)
+            fiscal_position_id = self.env['account.fiscal.position'].sudo()._get_fiscal_position(partner_supplier.id)
             date_order = self._purchase_get_date_order(supplierinfo)
             return {
                 'partner_id': self.supplier_id.id,
@@ -260,7 +260,7 @@ class SaleOrderLineInherit(models.Model):
         elif create_po and self.order_id.create_po_bool and not self.supplier_id:
             self.ensure_one()
             partner_supplier = supplierinfo.name
-            fiscal_position_id = self.env['account.fiscal.position'].sudo().get_fiscal_position(partner_supplier.id)
+            fiscal_position_id = self.env['account.fiscal.position'].sudo()._get_fiscal_position(partner_supplier.id)
             date_order = self._purchase_get_date_order(supplierinfo)
             return {
                 'partner_id': partner_supplier.id,
