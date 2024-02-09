@@ -1,0 +1,12 @@
+<odoo>
+  <record model="ir.ui.view" id="view_form_purchase_order_costing">
+      <field name="name">Vista Formulario - Herencia de Orden de Compra para línea de pedido de venta</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="/form/sheet/notebook/page[1]/field/tree/field[@name='product_id']" position="before">
+              <field name="sale_order_line_id"/>
+          </xpath>
+      </field>
+  </record>
+</odoo>

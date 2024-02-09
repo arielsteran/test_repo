@@ -1,0 +1,26 @@
+<odoo>
+    <record model="ir.ui.view" id="wizard_separate_wr_form_view">
+        <field name="name">Vista Formulario - Wizard Separar WR</field>
+        <field name="model">logistic.separate_wr_wiz</field>
+        <field name="arch" type="xml">
+            <form string="Separar WR" name="form_separate_wr">
+                <group name="config">
+
+                    <group name="wr_to_separate">
+                        <field name="wr_id" readonly="1" string="WR a Separar"/>
+                    </group>
+
+                    <group name="transport">
+                        <field name="transport_type"/>
+                    </group>
+                </group>
+
+                <footer class="oe_edit_only">
+                    <button string="Separar" class="btn-primary"
+                            name='action_confirm_separate' type="object"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,14 @@
+<odoo>
+    <record model="ir.ui.view" id="update_account_taxes_view">
+        <field name="name">update.account.taxes.view</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="account.view_tax_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type_tax_use']" position="after">
+                <field name="logistic_factor" />
+                <field name="logistic_value_dai"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

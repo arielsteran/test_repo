@@ -1,0 +1,28 @@
+<odoo>
+  <record model="ir.ui.view" id="view_form_sale_order_costing">
+      <field name="name">Vista Formulario - Herencia de Pedido de venta para costeo</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="/form/sheet/notebook/page[1]/field/tree/field[@name='product_id']" position="before">
+              <field name="to_quote"/>
+          </xpath>
+
+          <xpath expr="/form/sheet/notebook/page[1]/field/tree/field[@name='price_unit']" position="before">
+              <field name="suggested_price" readonly="1" force_save="1" attrs="{'invisible': [('to_quote', '=', False)]}"/>
+          </xpath>
+
+          <xpath expr="/form/sheet/notebook/page[1]/field/tree/field[@name='state']" position="before">
+              <field name="buyer_id" readonly="1" force_save="1" attrs="{'required': [('to_quote', '=', True)]}"/>
+              <field name="purchase_order_id" readonly="1" force_save="1"/>
+              <field name="state_purchase_order" readonly="1" force_save="1"/>
+              <button name="action_detail_costing" type="object" class="px-2" icon="fa-list"
+                      attrs="{'invisible': [('to_quote', '=', False)]}"
+                      string="Ver detalle de costeo del producto"
+                      options="{&quot;warn&quot;: true}"/>
+              <field name="supplier_cost_ids" force_save="1" invisible="1"/>
+              <field name="historical_purchase_order_ids" force_save="1" invisible="1"/>
+          </xpath>
+      </field>
+  </record>
+</odoo>

@@ -1,0 +1,223 @@
+<odoo>
+    <!-- explicit list view WR -->
+    <record model="ir.ui.view" id="wr_list_view">
+        <field name="name">Vista Lista - WR</field>
+        <field name="model">logistic.wr</field>
+        <field name="arch" type="xml">
+            <tree create="true" name="list_wr">
+                <field name="name"/>
+                <field name="prepared_date"/>
+                <field name="consignee_id"/>
+                <field name="supplier_id"/>
+                <field name="tracking"/>
+                <field name="count_bundle"/>
+                <field name="type"/>
+                <field name="transport_type"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- explicit form view WR -->
+    <record model="ir.ui.view" id="wr_form_view">
+        <field name="name">Vista Formulario - WR</field>
+        <field name="model">logistic.wr</field>
+        <field name="arch" type="xml">
+            <form string="WR">
+                <header name="header_wr">
+                    <button name="action_separate_wr" type="object"
+                            string="Separar WR" class="oe_highlight"
+                            confirm="Estás seguro que deseas separar el WR? Esta acción separará
+                                     este WR en otro con la(s) mercancía(s) seleccionada(s)."
+                            attrs="{'invisible': [('state', 'in', ['in_transit', 'delivered'])]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="stored,assigned,in_transit,delivered"/>
+                </header>
+
+                <sheet name="sheet_wr">
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group name="general_info">
+                        <group name="info_partners">
+                            <field name="supplier_id" widget="res_partner_many2one"
+                                   context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}"
+                                   options='{"always_reload": True}'/>
+                            <field name="is_separated" invisible="1"/>
+                            <field name="prepared_date"/>
+                            <field name="flag_domain"/>
+                            <field name="alert_id"/>
+                        </group>
+
+                        <group name="info_shipping">
+                            <field name="consignee_id" widget="res_partner_many2one"
+                                   context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}"
+                                   options='{"always_reload": True}'/>
+                            <field name="tracking" attrs="{'readonly': [('state', '=', 'delivered')]}"/>
+                            <field name="type" attrs="{'readonly': [('state', '=', 'delivered')]}"/>
+                            <field name="transport_type"
+                                   attrs="{'readonly': [('state', '=', 'delivered')]}"/>
+                        </group>
+                    </group>
+
+                    <notebook name="notebook_wr">
+                      <page string="Bultos" name="bundles"
+                            attrs="{'readonly': [('state', 'in', ('in_transit','delivered'))]}">
+                          <field name="bundle_ids">
+                              <tree string="Bultos" editable="bottom" name="list_bundles">
+                                  <!--<field name="name" readonly="1"/>-->
+                                  <field name="packaging_id"/>
+                                  <field name="width"/>
+                                  <field name="length"/>
+                                  <field name="height"/>
+                                  <field name="weight"/>
+                                  <field name="volume"/>
+                                  <field name="quantity"/>
+                                  <field name="volumetric_weight"/>
+                                  <field name="wr_id" invisible="1"
+                                         context="{
+                                              'id': parent.id
+                                          }"/>
+                              </tree>
+                          </field>
+                      </page>
+
+                      <page string="Documentos" name="docs"
+                            attrs="{'readonly': [('state', '=', 'delivered')]}">
+                          <field name="doc_ids">
+                              <kanban class="o_kanban_mobile" name="wr_kanban_one2many_docs">
+                                  <field name="name"/>
+                                  <field name="wr_id" invisible="1"
+                                         context="{
+                                              'id': parent.id
+                                          }"/>
+
+                                  <templates name="wr_template_one2many_docs">
+                                      <t t-name="kanban-box">
+                                          <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                              <t t-if="!record.name.raw_value">
+                                                  <div class="row">
+                                                      <div class="col-8">
+                                                          <strong>
+                                                              <span>
+                                                                  <t t-esc="record.name.value"/>
+                                                              </span>
+                                                          </strong>
+                                                      </div>
+                                                      <div class="col-4">
+                                                          <strong>
+                                                              <span class="float-right text-right">
+                                                                  <t t-esc="record.name.value"/>
+                                                              </span>
+                                                          </strong>
+                                                      </div>
+                                                  </div>
+                                              </t>
+                                              <t>
+                                                  <div class="row">
+                                                      <div class="col-12">
+                                                          <span>
+                                                              <t t-esc="record.name.value"/>
+                                                          </span>
+                                                      </div>
+                                                  </div>
+                                              </t>
+                                          </div>
+                                      </t>
+                                  </templates>
+                              </kanban>
+                          </field>
+                      </page>
+
+                      <!--<page string="Fotografías" name="photos" attrs="{'readonly': [('state', '=', 'delivered')]}">
+                          <field name="photo_ids" class="o_website_sale_image_list" context="{'default_name': name}" mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1"/>
+                      </page>-->
+
+                        <page string="POs" name="pos" readonly="0">
+                            <field name="po_ids"
+                                   mode="tree,form"
+                                   context="{'form_view_ref': 'logistic.po_form_view',
+                                             'tree_view_ref': 'logistic.po_list_view'
+                                            }"/>
+                            <button name="create_merchandise" type="object" class="btn-link">
+                                <span class="fa fa-plus-square"/>
+                                Generar mercadería
+                            </button>
+                        </page>
+
+                        <page string="WRs" name="wrs" attrs="{'invisible': [('is_separated', '=', False)]}">
+                            <field name="wr_child_ids"
+                                   mode="tree,form"
+                                   context="{'form_view_ref': 'logistic.wr_form_view'}">
+                                <tree string="WR" editable="bottom" name="list_wr">
+                                    <field name="name"/>
+                                    <field name="supplier_id"/>
+                                    <field name="consignee_id"/>
+                                    <field name="type"/>
+                                    <field name="transport_type"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Mercadería" name="merchandise"
+                              attrs="{'readonly': [('state', 'in', ('in_transit','delivered'))]}">
+                            <field name="merchandise_ids">
+                                <tree string="Mercadería" editable="bottom" name="merchandise">
+                                    <field name="separate_wr"/>
+                                    <field name="name"/>
+                                    <field name="company_id_location"/>
+
+                                    <field name="default_code"/>
+                                    <field name="product_id"/>
+                                    <field name="product_template_id" invisible="1"/>
+                                    <field name="transport_type"/>
+                                    <field name="qty"/>
+
+                                    <field name="wr_id" invisible="1"
+                                           context="{
+                                                'id': parent.id
+                                            }"/>
+                                </tree>
+                            </field>
+                            <!-- <group class="oe_subtotal_footer oe_right">
+                                <field name="total_amount_merchandise" widget="monetary"/>
+                            </group> -->
+                        </page>
+                        <page string="Notas">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+
+<!--                <div class="oe_chatter" name="chatter">-->
+<!--                    <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                    <field name="activity_ids" widget="mail_activity"/>-->
+<!--                    <field name="message_ids" widget="mail_thread"/>-->
+<!--                </div>-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="wr_action_window">
+        <field name="name">WRs</field>
+        <field name="res_model">logistic.wr</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo WR
+            </p><p>
+               Colocar texto descriptivo a lo que hace el modelo
+            </p>
+        </field>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="WRs" id="logistic.menu_wr_list" parent="logistic.menu_logistic_wr" sequence="0" action="logistic.wr_action_window"/>
+</odoo>

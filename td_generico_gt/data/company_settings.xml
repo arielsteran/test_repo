@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="gt_config_settings" model="res.config.settings">
+        <field name="show_line_subtotals_tax_selection" eval="tax_included"/>
+        <field name="module_snail_mail_account" eval="False"/>
+        <field name="module_account_invoice_extract" eval="False"/>
+        <field name="module_account_check_printing" eval="True"/>
+        <field name="module_account_yodlee" eval="False"/>
+        <field name="module_account_bank_statement_import_camt" eval="False"/>
+        <field name="module_account_bank_statement_import_ofx" eval="False"/>
+        <field name="paper_format_id" ref="base.paperformat_us"/>
+        <field name="module_partner_autocomplete" eval="False"/>
+        <field name="module_web_unsplash" eval="False"/>
+    </record>
+    <function model="res.config.settings" name="execute">
+        <value model="res.config.settings"
+               search="[('id', '=', ref('gt_config_settings'))]"/>
+    </function>
+</odoo>

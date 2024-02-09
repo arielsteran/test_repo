@@ -1,0 +1,168 @@
+<odoo>
+    <!-- explicit list view CONMER -->
+    <record model="ir.ui.view" id="conmer_list_view">
+        <field name="name">Vista Lista - CONMER</field>
+        <field name="model">logistic.conmer</field>
+        <field name="arch" type="xml">
+            <tree create="true" name="list_conmer">
+                <field name="date_search"/>
+                <!--<field name="name"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <!-- explicit form view CONMER -->
+    <record model="ir.ui.view" id="conmer_form_view">
+        <field name="name">Vista Formulario - CONMER</field>
+        <field name="model">logistic.conmer</field>
+        <field name="arch" type="xml">
+            <form string="CONMER" name="form_conmer">
+<!--                <header name="header_conmer">-->
+<!--                </header>-->
+
+                <sheet name="sheet_conmer">
+<!--                    <div class="oe_button_box" name="button_box">-->
+<!--                        <button name="preview_sale_order"-->
+<!--                            type="object"-->
+<!--                            class="oe_stat_button"-->
+<!--                            icon="fa-globe icon">-->
+<!--                            <div class="o_field_widget o_stat_info">-->
+<!--                                <span class="o_stat_text">Customer</span>-->
+<!--                                <span class="o_stat_text">Preview</span>-->
+<!--                            </div>-->
+<!--                        </button>-->
+<!--                    </div>-->
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group name="general_group">
+                        <field name="date_search"/>
+                        <!--
+                        <group name="search_bar">
+                            <div class="o_row" name="search">
+                                <button name="search_wrs" type="object" class="oe_edit_only btn-link">
+                                       <span class="fa fa-plus-square"/>
+                                       Buscar
+                                </button>
+                                <field name="filter_by"
+                                       options='{"no_create": True, "no_open": True}'/>
+                                <field name="filter_type" invisible="1"/>
+                                <field name="filter_text"
+                                       attrs="{'invisible': [('filter_type', 'in', ['selection', 'date'])]}"/>
+                                <field name="search_selection"
+                                       attrs="{'invisible': [('filter_type', '!=', 'selection')]}"/>
+                                <field name="search_date"
+                                       attrs="{'invisible': [('filter_type', '!=', 'date')]}"/>
+                            </div>
+                        </group>
+                        -->
+
+                    </group>
+
+                    <notebook name="notebook_wrs2">
+                        <page string="WRs" name="wrs">
+                            <field name="wrs_to_alert_create"  domain="[('prepared_date','=',date_search)]"/>
+                            <group name="main_group_buttons">
+                                <group name="group_buttons">
+                                    <div class="o_row" name="buttons_conmer">
+                                        <!--<button name="print_conmer" type="object" class="oe_edit_only btn-link">
+                                            <span class="fa fa-plus-square"/>
+                                            Imprimir
+                                        </button> -->
+
+                                        <button name="generate_alert_action" type="object" class="oe_edit_only btn-link">
+                                            <span class="fa fa-plus-square"/>
+                                            Generar Alerta
+                                        </button>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+
+                    <!--
+                    <notebook name="notebook_wrs">
+                        <page string="WRs" name="wrs">
+                            <field name="wr_ids"
+                                   readonly="1"
+                                   mode="tree,form"
+                                   context="{'form_view_ref': 'logistic.wr_form_view',
+                                             'tree_view_ref': 'logistic.wr_list_view'
+                                            }">
+                            </field>
+
+                            <group name="main_group_buttons">
+                                <group name="group_buttons">
+                                    <div class="o_row" name="buttons_conmer">
+                                        <button name="print_conmer" type="object" class="oe_edit_only btn-link">
+                                            <span class="fa fa-plus-square"/>
+                                            Imprimir
+                                        </button>
+
+                                        <button name="generate_alert_action" type="object" class="oe_edit_only btn-link">
+                                            <span class="fa fa-plus-square"/>
+                                            Generar Alerta
+                                        </button>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+
+                    -->
+<!--
+                    <notebook name="notebook_pos">
+                        <page string="POs" name="pos">
+                            <field name="po_ids"
+                                   readonly="1"
+                                   mode="tree,form"
+                                   context="{'form_view_ref': 'logistic.po_form_view',
+                                             'tree_view_ref': 'logistic.po_list_view'
+                                            }"/>
+                        </page>
+                    </notebook>
+-->
+                </sheet>
+
+<!--                <div class="oe_chatter" name="chatter">-->
+<!--                    <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                    <field name="activity_ids" widget="mail_activity"/>-->
+<!--                    <field name="message_ids" widget="mail_thread"/>-->
+<!--                </div>-->
+            </form>
+        </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="conmer_action_window">
+        <field name="name">CONMER</field>
+        <field name="res_model">logistic.conmer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo CONMER
+            </p><p>
+                CONMER: Geberar alerta desde Warehouse.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_account_invoice_filter" model="ir.ui.view">
+        <field name="name">search.conmer</field>
+        <field name="model">logistic.conmer</field>
+        <field name="arch" type="xml">
+            <search string="Search Invoice">
+                <field name="date_search"
+                    filter_domain="[('search_date','ilike',self)]"/>
+        </search>
+        </field>
+    </record>
+
+
+    <menuitem name="Conmers" id="logistic.menu_conmer_list" parent="logistic.menu_logistic_conmer" sequence="212435" action="logistic.conmer_action_window"/>
+
+</odoo>

@@ -1,0 +1,23 @@
+<odoo>
+    <record model="ir.ui.view" id="res_company_product_costing">
+      <field name="name">Herencia de Vista de Formulario de Compañía para Costeos de productos</field>
+      <field name="model">res.company</field>
+      <field name="inherit_id" ref="base.view_company_form"/>
+      <field name="arch" type="xml">
+        <xpath expr = "/form/sheet/notebook/page" position="after">
+          <page string="Configuración Costeos" groups="base.group_system">
+            <group string="Configutación general de costeos">
+                <field name="suggested_margin"/>
+                <field name="rate"/>
+                <field name="maritime_cost"/>
+                <field name="maritime_insurance_cost"/>
+                <field name="air_cost"/>
+                <field name="insurance_cost"/>
+                <field name="internal_shipping_us"/>
+                <field name="internal_shipping"/>
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+</odoo>

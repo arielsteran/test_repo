@@ -1,0 +1,118 @@
+<odoo>
+    <data>
+        <report id="report_conmer"
+                string="Reporte de Conmer"
+                model="logistic.conmer"
+                report_type="qweb-pdf"
+                name="logistic.report_conmer_template"
+        />
+        <template id="report_conmer_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout_logistic">
+                        <div class="page">
+                            <h1><span t-field="o.date_search"/></h1>
+                        <table class="table table-sm o_main_table" style ="margin-top:40px;border-bottom:#1ca782 1px solid;">
+                            <thead>
+                                <tr>
+                                    <th name="th_cuantity" class="text-left">
+                                        Referencia
+                                    </th>
+                                    <th name="th_cuantity" class="text-left">
+                                        Consignado
+                                    </th>
+                                    <th name="th_type" class="text-left">
+                                        Proveedor
+                                    </th>
+                                    <th name="th_witdh" class="text-left">
+                                        Cant
+                                    </th>
+                                    <th name="th_height" class="text-left">
+                                        Tipo
+                                    </th>
+                                    
+                                    <th name="th_weight" class="text-left">
+                                        W
+                                    </th>
+                                    <th name="th_weight" class="text-left">
+                                        L
+                                    </th>
+                                    
+                                    <th name="th_H" class="text-left">
+                                        H
+                                    </th>
+                                    <th name="th_long" class="text-left">
+                                        peso
+                                    </th>
+                                    <th name="th_vol" class="text-left">
+                                        Vol.
+                                    </th>
+                                    <th name="th_pvol" class="text-left">
+                                        Peso Vol.
+                                    </th>
+                                    <th name="th_type">
+                                      Tipo R.
+                                    </th>
+                                    <th name="th_type">
+                                      Tipo Transporte.
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.wrs_to_alert_create" t-as="line">
+                                  <t t-foreach="line.bundle_ids" t-as="bundles">
+                                      <tr>
+                                          <td>
+                                              <span class="text-center" t-field="line.name"/>
+                                          </td>
+                                          <td>
+                                              <span class="text-center" t-field="line.consignee_id"/>
+                                          </td>
+                                          <td>
+                                              <span class="text-center" t-field="line.supplier_id"/>
+                                          </td>
+                                          <td>
+                                              <span class="text-center" t-field="bundles.quantity"/>
+                                          </td>
+                                          <td>
+                                              <span class="text-center" t-field="bundles.packaging_id"/>
+                                          </td>
+                                          
+                                          <td>
+                                              <span class="text-center" t-field="bundles.width"/>
+                                          </td>
+                                          <td>
+                                              <span class="text-center" t-field="bundles.length"/>
+                                          </td>
+                                          
+                                          <td>
+                                              <span class="text-center" t-field="bundles.height"/>
+                                          </td>
+                                          <td>
+                                              <span class="text-center" t-field="bundles.weight"/>
+                                          </td>
+                                          <td>
+                                              <span class="text-center" t-field="bundles.volume"/>
+                                          </td>
+                                          <td>
+                                              <span class="text-center" t-field="bundles.volumetric_weight"/>
+                                          </td>
+                                          <td>
+                                              <span class="text-center" t-field="line.type"/>
+                                          </td>
+                                          <td>
+                                              <span class="text-center" t-field="line.transport_type"/>
+                                          </td>
+                                      </tr>
+                                  </t>
+                                </t>
+                            </tbody>
+                    </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,12 @@
+<odoo>
+    <!-- Top Logistic menu item -->
+    <menuitem name="Logística"
+        id="menu_logistic"
+        groups="logistic.group_logistic_user,logistic.group_logistic_manager"
+        sequence="60"/>
+
+    <menuitem id="menu_logistic_conmer" name="Conmer" parent="menu_logistic" sequence="2"/>
+    <menuitem id="menu_logistic_wr" name="WR" parent="menu_logistic" sequence="1"/>
+    <menuitem id="menu_logistic_alerts" name="Alertas" parent="menu_logistic" sequence="3"/>
+
+</odoo>

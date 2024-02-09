@@ -1,0 +1,16 @@
+<odoo>
+  <record model="ir.ui.view" id="view_form_product_template_volumetric">
+      <field name="name">Vista Formulario - Herencia de Producto para factor volumétrico</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+          <xpath expr="/form/sheet/notebook/page[4]/group[1]/group/div[@name='weight']" position="after">
+              <label for="volumetric" attrs="{'invisible':[('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}"/>
+              <div class="o_row" name="volumetric" attrs="{'invisible':[('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}">
+                  <field name="volumetric"/>
+                  <span><field name="volumetric_uom_name"/></span>
+              </div>
+          </xpath>
+      </field>
+  </record>
+</odoo>

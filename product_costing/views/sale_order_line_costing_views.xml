@@ -1,0 +1,157 @@
+<odoo>
+  <record model="ir.ui.view" id="view_tree_sale_order_line_costing">
+      <field name="name">Vista Lista - Líneas de Pedido de Venta para Costeo</field>
+      <field name="model">sale.order.line</field>
+      <field name="arch" type="xml">
+          <tree create="0">
+              <field name="company_id" invisible="1"/>
+              <field name="quoted" invisible="1"/>
+              <field name="product_id"/>
+              <field name="order_partner_id"/>
+              <field name="order_id" string="Pedido"/>
+              <field name="supplier_id"/>
+              <field name="cost"/>
+              <field name="other_cost" string="Otros Costos"/>
+              <field name="suggested_margin" string="Márgen"/>
+              <field name="suggested_price"/>
+          </tree>
+      </field>
+  </record>
+
+  <record model="ir.ui.view" id="view_form_sale_order_line_costing">
+      <field name="name">Vista Formulario - Línea de Pedido de venta para costeo</field>
+      <field name="model">sale.order.line</field>
+      <field name="arch" type="xml">
+          <form string="Línea de Pedido de venta para costeo" create="false">
+              <header>
+                  <button name="action_purchase_requisition" type="object"
+                          string="Crear Acuerdo de Compra" icon="fa-plus" class="oe_highlight" attrs="{'invisible': ['|', ('quoted', '=', True), ('costing_date', '!=', False)]}"/>
+
+                  <button name="action_send_message_salesman" type="object"
+                          string="Enviar" icon="fa-paper-plane" attrs="{'invisible': ['|', ('supplier_id', '=', False), ('costing_date', '!=', False)]}"/>
+              </header>
+
+              <sheet>
+                  <group>
+                      <field name="quoted" invisible="1"/>
+                      <field name="company_id" invisible="1"/>
+                      <group name="product" style="display: block; width: 100%;">
+                          <field name="product_id"/>
+                          <field name="name"/>
+                      </group>
+
+                      <group name="info_sales" style="display: block; width: 100%;">
+                          <group name="client">
+                              <field name="order_partner_id" readonly="1"/>
+                          </group>
+
+                          <group name="salesman">
+                              <field name="salesman_id" readonly="1" force_save="1" />
+                          </group>
+                      </group>
+
+                      <group name="purchase" style="display: block; width: 100%;">
+                          <group name="config">
+                              <field name="supplier_id" readonly="1" force_save="1" />
+                              <field name="cost" readonly="1" force_save="1" />
+                              <field name="shipping_way" widget="radio" readonly="1" force_save="1" />
+                              <field name="purchase_requisition_id" options="{'no_create': True}" readonly="1" force_save="1" />
+                              <field name="has_local_shipping" readonly="1" force_save="1"/>
+                              <field name="special_purchase"/>
+                          </group>
+
+                          <group name="purchase_costs">
+                              <field name="suggested_margin" readonly="1" force_save="1" />
+                              <field name="other_cost" readonly="1" force_save="1" />
+                              <field name="suggested_price" readonly="1" force_save="1" />
+                              <field name="dai" readonly="1" force_save="1"/>
+                              <field name="days" readonly="1" force_save="1"/>
+                              <field name="dispatch_date" readonly="1" force_save="1"/>
+                          </group>
+                      </group>
+
+                      <notebook style="display: block; width: 100%;">
+                          <page string="Proveedores">
+                              <group name="suppliers" style="display: block; width: 100%;">
+                                  <field name="supplier_cost_ids" force_save="1" nolabel="1"
+                                         context="{'default_sale_order_line_id': id, 'tree_view_ref': 'product_costing.view_tree_supplier_cost'}">
+                                  </field>
+                              </group>
+                          </page>
+
+                          <page string="Variables">
+                              <group name="general_variables" style="display: block; width: 100%;">
+                                  <group name="first_variables">
+                                      <field name="maritime_cost"/>
+                                      <field name="air_cost"/>
+                                      <field name="insurance_cost"/>
+                                  </group>
+
+                                  <group name="second_variables">
+                                      <field name="maritime_insurance_cost"/>
+                                      <field name="internal_shipping_us"/>
+                                      <field name="internal_shipping"/>
+                                  </group>
+                              </group>
+                          </page>
+                      </notebook>
+
+                      <group name="buyer" style="display: block; width: 100%;">
+                          <group name="historical_purchase_orders" string="Historial de compras del producto">
+                              <field name="historical_purchase_order_ids" force_save="1" nolabel="1" create="0"
+                                     context="{'default_sale_line_id': id, 'tree_view_ref': 'product_costing.view_tree_historical_purchase_order'}"/>
+                          </group>
+
+                          <group name="buyer_and_date">
+                              <field name="costing_date" force_save="1" readonly="1"/>
+                              <field name="buyer_id" readonly="1"/>
+                          </group>
+                      </group>
+                  </group>
+              </sheet>
+          </form>
+      </field>
+  </record>
+
+  <record model="ir.ui.view" id="view_search_sale_order_line_costing">
+      <field name="name">Vista Búsqueda - Línea de Pedido de venta para costeo</field>
+      <field name="model">sale.order.line</field>
+      <field name="arch" type="xml">
+          <search string="Búsqueda para Líneas de Pedido de Venta por Costear">
+              <field name="supplier_id" string="Proveedor" filter_domain="[('supplier_id', 'ilike', self)]"/>
+              <field name="order_id" string="Pedido" filter_domain="[('order_id', 'ilike', self)]"/>
+              <field name="product_id" string="Producto" filter_domain="[('product_id', 'ilike', self)]"/>
+              <field name="order_partner_id" string="Cliente" filter_domain="[('order_partner_id', 'ilike', self)]"/>
+              <field name="salesman_id" string="Vendedor" filter_domain="[('salesman_id', 'ilike', self)]"/>
+              <field name="buyer_id" string="Comprador" filter_domain="[('buyer_id', 'ilike', self)]"/>
+              <group expand="0" string="Agrupar por">
+                  <filter string="Producto" name="product" domain="[]" context="{'group_by':'product_id'}"/>
+                  <filter string="Pedido" name="order" domain="[]" context="{'group_by':'order_id'}"/>
+                  <filter string="Vendedor" name="salesperson" domain="[]" context="{'group_by':'salesman_id'}"/>
+                  <filter string="Cliente" name="client" domain="[]" context="{'group_by':'order_partner_id'}"/>
+                  <filter string="Proveedor" name="supplier" domain="[]" context="{'group_by':'supplier_id'}"/>
+                  <filter string="Comprador" name="buyer" domain="[]" context="{'group_by':'buyer_id'}"/>
+              </group>
+          </search>
+      </field>
+  </record>
+
+    <!-- actions opening views on models -->
+  <record model="ir.actions.act_window" id="product_costing.action_menu_sale_order_line_costing">
+      <field name="name">Líneas de Pedido de Venta para Costeo</field>
+      <field name="res_model">sale.order.line</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('buyer_id','=', uid), ('to_quote','=', True), ('quoted','=', False)]</field>
+      <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+              No hay Líneas de Pedido de Venta por Costear
+          </p>
+      </field>
+  </record>
+
+  <menuitem name="Costeos"
+       id="product_costing_sale_order_line_costing"
+       parent="purchase.menu_procurement_management"
+       action="product_costing.action_menu_sale_order_line_costing"
+       sequence="11"/>
+</odoo>

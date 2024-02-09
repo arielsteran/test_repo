@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <report id="report_bundle"
+                string="Tickets"
+                model="logistic.wr"
+                report_type="qweb-pdf"
+                name="logistic.report_bundle_template"
+        />
+        <template id="report_bundle_template">
+          <t t-call="web.html_container">
+                          <t t-foreach="docs" t-as="o">
+                              <!--<t t-call="web.external_layout">-->
+                                  <div class="page">
+                                    <t t-set="bundle" t-value="0"/>
+                                    <t t-set="bundle2" t-value="0"/>
+                                    <t t-foreach="o.bundle_ids" t-as="line">
+                                      <t t-set="bundle" t-value="bundle+line.quantity"/>  
+                                    </t>
+                                      <t t-foreach="bundle" t-as="line">
+                                        <t t-set="bundle2" t-value="bundle2+1"/>
+                                        <div style="text-align:center; " class="text-center">
+                                          <div style="margin-top:100px">
+                                            <h1>JAS CARGO</h1><br/>
+                                            <div style="margin-top:-30px">
+                                              8140 NW 74 AVE # 5 MEDLEY FLORIDA 33166 <br/>
+                                              <t t-set="company" t-value="res_company"/>
+                                              PH: 305-889-2929 Email: <span t-esc="company.email"/><br/>
+                                            </div>
+                                            <h1 style="font-size: 100px; margin-top:-10px"><span t-field="o.name"/></h1>
+                                            <p style="margin-top:-55px">PCS:<span t-esc="bundle2"/>/<span t-esc="bundle"/></p>
+
+                                          </div>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+
+                                      </t>
+                                  </div>
+                              </t>
+                          <!--</t>-->
+                      </t>
+        </template>
+    </data>
+</odoo>

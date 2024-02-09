@@ -1,0 +1,20 @@
+<odoo>
+  <data>
+  
+      <record id="sh_res_company" model="ir.ui.view">
+		<field name="name">res.currency.amount.in.words.view</field>
+		<field name="model">res.currency</field>
+		<field name="inherit_id" ref="base.view_currency_form"/>
+		<field name="arch" type="xml">
+			<field name="currency_subunit_label" position="before">
+				<field name="amount_separator"/>
+			</field>
+			<field name="currency_subunit_label" position="after">
+				<field name="close_financial_text"/>
+			</field>
+		</field>
+        </record>
+
+
+  </data>
+</odoo>

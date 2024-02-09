@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<odoo noupdate="1">-->
+<odoo>
+    <record id="contabilidad_gt" model="account.chart.template">
+        <field name="property_account_receivable_id" ref="cta_gt_110201"/>
+        <field name="property_account_payable_id" ref="cta_gt_210101"/>
+        <field name="property_account_income_categ_id" ref="cta_gt_410101"/>
+        <field name="property_account_expense_categ_id" ref="cta_gt_510101"/>
+        <field name="income_currency_exchange_account_id" ref="cta_gt_410103"/>
+        <field name="expense_currency_exchange_account_id" ref="cta_gt_710101"/>
+        <field name="default_pos_receivable_account_id" ref="cta_gt_110205" />
+    </record>
+</odoo>

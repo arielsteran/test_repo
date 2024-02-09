@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="account_account_form_extend_view" model="ir.ui.view">
+            <field name="name">Herencia de vista formulario de cuenta contable para extender</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_form"/>
+            <field name="arch" type="xml">
+                <field name="deprecated" position="after">
+                  <field name="is_custom_payment_account" groups="base.group_system"/>
+                </field>
+            </field>
+        </record>
+    </data>
+
+</odoo>

@@ -1,0 +1,46 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="update_shipping_cost_view">
+        <field name="name">update.shipping.cost.view</field>
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='quantity']" position="after">
+                <field name="price_dai"/>
+            </xpath>
+            <xpath expr="//page[2]/field[1]/form[1]/group[1]/group[2]/field[2]" position="after">
+              <field name="price_dai"/>
+            </xpath>
+            <xpath expr="//page[2]/field[1]" position="after">
+              <button name="action_generation_dai" type="object">
+                  <span class="fa fa-plus-square"/>
+                  Generar dai
+              </button>
+            </xpath>
+            <xpath expr="//field[@name='picking_ids']" position="after">
+              <field name="police_reference"/>
+              <field name="reference"/>
+              <field name="calculate_dai"/>
+            </xpath>
+            <xpath expr="//field[@name='vendor_bill_id']" position="after">
+              <field name="exchange_rate"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="total_usd_price" widget="moneraty"/>
+                <field name="total_dai_aditional_cost" widget="monetary"/>
+            </xpath>
+            <xpath expr="//field[@name='valuation_adjustment_lines']" position="after">
+              <group class="oe_subtotal_footer oe_right">
+                <field name="total_dai_adjustments_lines" widget="monetary"/>
+              </group>
+            </xpath>
+            <xpath expr="//tree/field[@name='split_method']" position="after">
+                <field name="dolar_price"/>
+            </xpath>
+
+
+        </field>
+    </record>
+  </data>
+</odoo>

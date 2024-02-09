@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_logistic_manager" model="res.groups">
+            <field name="name">Administración Logística</field>
+            <field name="comment">Grupo para usuarios con todos los permisos en logística</field>
+        </record>
+
+        <record id="group_logistic_user" model="res.groups">
+            <field name="name">Usuario Logística</field>
+            <field name="comment">Grupo para usuarios cons permisos reducidos en logística</field>
+        </record>
+    </data>
+</odoo>

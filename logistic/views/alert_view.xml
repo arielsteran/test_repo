@@ -1,0 +1,229 @@
+<odoo>
+    <record model="ir.ui.view" id="alert_list_view">
+        <field name="name">Vista Lista - Alert</field>
+        <field name="model">logistic.alert</field>
+        <field name="arch" type="xml">
+            <tree string="Alertas" name="list_pos">
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="state"/>
+                <field name="supplier_id"/>
+                <field name="consignee_id"/>
+                <field name="carrier_id"/>
+                <field name="guide_BL"/>
+                <field name="transport_type"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_account_invoice_filter_alert" model="ir.ui.view">
+        <field name="name">search.alert</field>
+        <field name="model">logistic.alert</field>
+        <field name="arch" type="xml">
+            <search string="Search Invoice">
+                <field name="name"/>
+                <field name="reference"
+                filter_domain="[('search_date','ilike',self)]"/>
+        </search>
+        </field>
+    </record>
+
+        <!-- explicit form view CONMER -->
+    <record model="ir.ui.view" id="alert_form_view">
+        <field name="name">Vista Formulario - Alert</field>
+        <field name="model">logistic.alert</field>
+        <field name="arch" type="xml">
+            <form string="ALERT" name="form_alert">
+                <header name="header_alert">
+                  <button name="action_create_so" type="object"
+                    string="Crear SO" class="oe_highlight"
+                    />
+                  <button name="action_create_po" type="object"
+                          string="Crear PO" class="oe_highlight"
+                          />
+                  <field name="flag_create_po" invisible="True"/>
+                  <field name="flag_create_so" style="display:none"/>
+                  <field name="state" widget="statusbar" statusbar_visible="prepared,in_transit,customs,in_warehouse"/>
+                </header>
+                <sheet name="sheet_alert">
+                    <div class="oe_button_box" name="button_box">
+                            <button type="object" name="action_view_so" class="oe_stat_button" icon="fa-pencil-square-o">
+                                <field string ="Ventas" name = "sales_count" widget = "statinfo" />
+                            </button>
+                            <button type="object" name="action_view_po" class="oe_stat_button" icon="fa-pencil-square-o">
+                                <field name="purchase_count" widget="statinfo" string="Compras"/>
+                            </button>
+                      </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="supplier_id"/>
+                            <field name="carrier_id"/>
+                            <field name="transport_type"/>
+                            <field name="supplier_po" invisible="1"/>
+                            <field name="currency_id" readonly="0"/>
+                            <!-- <field name="picking_type_id_so"/> -->
+                        </group>
+                        <group>
+                            <field name="consignee_id"/>
+                            <field name="reference"/>
+                            <field name="guide_BL"/>
+                            <field name="prepared_date"/>
+                            <field name="dispatch_date"/>
+                            <field name="exchange_rate"/>
+                            <!--<field name="currency_exchange"/>-->
+                        </group>
+                    </group>
+                    <notebook name="notebook_alerts">
+                      <page string="WH relacionados" name="wh_relation">
+                          <field name="wh_linked" widget="one2many_list" nolabel="1" class="oe_inline oe_no_button" context="{'wh_linked': active_id}" domain="[('flag_domain','=',False)]">
+                              <tree string="WH relacionados" editable="bottom">
+                                  <field name="create_so_bool"/>
+                                  <field name="bool_with_so"/>
+                                  <field name="bool_with_po"/>
+                                  <field name="name"/>
+                                  <field name="state"/>
+                                  <field name="supplier_id"/>
+                                  <field name="consignee_id"/>
+                                  <field name="type"/>
+                              </tree>
+                          </field>
+
+                          <button name="compute_domain" type="object" class="oe_edit_only btn-link">
+                              <span class="fa fa-plus-square"/>
+                                  Confirmar
+                          </button>
+                      </page>
+                        <page string="Mercadería" name="merchandise">
+                            <field name="merchandise_ids">
+                                <tree string="Mercadería" editable="bottom" name="merchandise">
+<!--                                    <field name="separate_wr"/>-->
+                                    <field name="wr_id" readonly="1"/>
+                                    <field name="bool_create_so_form_alert" readonly="1" />
+                                    <field name="bool_true_so_created" readonly="1" />
+                                    <field name="bool_create_po_form_alert" readonly="0"  />
+                                    <field name="bool_true_po_created" readonly="0" />
+                                    <field name="name"/>
+                                    <field name="company_id_location"/>
+                                    <field name="default_code"/>
+                                    <field name="product_id"/>
+                                    <field name="product_template_id" invisible="1"/>
+                                    <field name="transport_type"/>
+                                    <field name="qty"/>
+                                    <field name="product_dai" widget="many2many_tags"/>
+                                    <field name="factor"/>
+                                    <field name="price_unit" readonly="0"/>
+                                    <field name="amount" readonly="0"/>
+                                    <field name="polici"/>
+                                    <field name="real_price" readonly="1"/>
+                                    <field name="alert_id" invisible="1"
+                                           context="{
+                                                'id': parent.id
+                                            }"/>
+                                </tree>
+                            </field>
+
+
+                        </page>
+                        <page string="Bultos" name="bundles">
+                            <field name="bundle_ids">
+                                <tree string="Bultos" editable="bottom" name="list_bundles">
+                                    <field name="packaging_id"/>
+                                    <field name="height"/>
+                                    <field name="width"/>
+                                    <field name="length"/>
+                                    <field name="weight"/>
+                                    <field name="volume"/>
+                                    <field name="quantity"/>
+                                    <field name="volumetric_weight"/>
+                                    <field name="alert_id" invisible="1"
+                                           context="{
+                                                'id': parent.id
+                                            }"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Gastos" name="expenses">
+                            <field name="shipping_cost">
+                                <tree string="Gastos" editable="bottom">
+                                    <field name="product_id" domain="[('landed_cost_ok', '=', True)]" context="{'default_landed_cost_ok': True}"/>
+                                    <field name="name"/>
+                                    <field name="account_id"/>
+                                    <field name="split_method"/>
+                                    <field name="dolar_price"/>
+                                    <field name="price_unit"/>
+                                    <field name="alert_id" invisible="1"
+                                           context="{
+                                                'id': parent.id
+                                            }"/>
+                                </tree>
+                            </field>
+
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+     <record model="ir.ui.view" id="alert_module_kanban_view">
+         <field name="name">alert.module.kanban</field>
+         <field name="model">logistic.alert</field>
+         <field name="type">kanban</field>
+         <field name="arch" type="xml">
+             <kanban default_group_by="state" class="o_kanban_small_column o_kanban_project_tasks o_kanban_mobile">
+                 <!--list of field to be loaded -->
+                 <field name="name" />
+                 <templates>
+                 <t t-name="kanban-box">
+                     <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                        <div class="row o_kanban_card_content">
+                            <div class="oe_kanban_details col-12 o_kanban_primary_right ml-2" style="margin-right: 0px;">
+                                 <group>
+                                     <div class="oe_product_desc">
+                                     <field name="name"/>
+                                         <div><strong>Proveedor:</strong><br/><field name="supplier_id"/></div>
+                                         <div><strong>Consignatario:</strong><br/><field name="consignee_id"/></div>
+                                         <div><strong>Transportista:</strong><br/><field name="carrier_id"/></div>
+                                         <div><strong>Guía/BL</strong><br/><field name="guide_BL"/></div>
+                                         <div><strong>Referencia</strong><br/><field name="reference"/></div>
+                                         <div><strong>Fecha Recogida/Rnvio</strong><br/><field name="dispatch_date"/></div>
+                                    </div>
+                                 </group>
+                            </div>
+                        </div>
+                     </div>
+                 </t>
+                 </templates>
+             </kanban>
+         </field>
+     </record>
+
+
+    <record model="ir.actions.act_window" id="alert_action_window">
+        <field name="name">Alerts</field>
+        <field name="res_model">logistic.alert</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear una nueva alerta
+            </p><p>
+               Colocar texto descriptivo a lo que hace el modelo
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Alerts" id="logistic.menu_alert_list" parent="logistic.menu_logistic_alerts" sequence="3" action="logistic.alert_action_window"/>
+</odoo>

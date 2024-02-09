@@ -1,0 +1,71 @@
+<odoo>
+  <record model="ir.ui.view" id="view_tree_supplier_cost">
+      <field name="name">Vista Lista - Proveedor de costeo por línea de pedido de venta</field>
+      <field name="model">product_costing.supplier_cost</field>
+      <field name="arch" type="xml">
+          <tree editable="bottom">
+              <field name="quote_supplier" string=" "/>
+              <field name="name"/>
+              <field name="sale_order_line_id" invisible="1"/>
+              <field name="special_purchase" invisible="1"/>
+              <field name="shipping_way"/>
+              <field name="days" optional="hide"/>
+              <field name="cost"/>
+              <field name="has_local_shipping" optional="hide"/>
+              <field name="us_shipping" attrs="{'readonly': [('special_purchase', '=', False)]}"/>
+              <field name="export_shipping" attrs="{'readonly': [('special_purchase', '=', False)]}"/>
+              <field name="dai"/>
+              <field name="insurance_cost" attrs="{'readonly': [('special_purchase', '=', False)]}"/>
+              <field name="local_shipping" attrs="{'invisible': [('has_local_shipping', '=', False)]}" optional="hide"/>
+              <field name="suggested_margin"/>
+              <field name="sale_suggested_price"/>
+          </tree>
+      </field>
+  </record>
+
+  <record model="ir.ui.view" id="view_form_supplier_cost">
+      <field name="name">Vista Formulario - Proveedor de costeo por línea de pedido de venta</field>
+      <field name="model">product_costing.supplier_cost</field>
+      <field name="arch" type="xml">
+          <form string="Proveedor de costeo" create="false">
+              <sheet>
+                  <group>
+                      <group name="supplier" style="display: block; width: 100%;">
+                          <field name="name"/>
+                      </group>
+
+                      <group name="purchase" style="display: block; width: 100%;">
+                          <group name="config">
+                              <field name="cost"/>
+                              <field name="shipping_way" widget="radio"/>
+                               <field name="suggested_margin"/>
+                              <field name="sale_suggested_price"/>
+                          </group>
+
+                          <group name="purchase_costs">
+                              <field name="has_local_shipping"/>
+                              <field name="local_shipping" attrs="{'invisible': [('has_local_shipping', '=', False)]}"/>
+                              <field name="us_shipping"/>
+                              <field name="export_shipping"/>
+                              <field name="insurance_cost"/>
+                          </group>
+                      </group>
+                  </group>
+              </sheet>
+          </form>
+      </field>
+  </record>
+
+<!--  &lt;!&ndash; actions opening views on models &ndash;&gt;-->
+<!--  <record model="ir.actions.act_window" id="product_costing.action_menu_supplier_cost">-->
+<!--      <field name="name">Proveedor de costeo por línea de pedido</field>-->
+<!--      <field name="res_model">product_costing.supplier_cost</field>-->
+<!--      <field name="view_mode">tree,form</field>-->
+<!--  </record>-->
+
+<!--  <menuitem name="Proveedores de costeo"-->
+<!--       id="product_costing_supplier_cost"-->
+<!--       parent="purchase.menu_procurement_management"-->
+<!--       action="product_costing.action_menu_supplier_cost"-->
+<!--       sequence="12"/>-->
+</odoo>

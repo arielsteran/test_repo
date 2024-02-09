@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_move_inherit_search">
+        <field name="name">Account Move Inherit Search</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <field name='partner_id' position="after">
+                <field name="nit"/>
+                <field name="legal_name"/>
+            </field>
+        </field>
+    </record>
+</odoo>

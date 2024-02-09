@@ -1,0 +1,12 @@
+    <data>
+        <record id="purchase_order_inherit_no_parte" model="ir.ui.view">
+            <field name="name">purchase.order.inherit.no.parte</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[1]/field[1]/tree/field[8]" position="after">
+                <field name="default_code" readonly="False"/>
+                </xpath>
+            </field>
+        </record>
+    </data>

@@ -1,0 +1,163 @@
+<odoo>
+  <record id="product_costing.inherited_res_config_settings_view_suggested_margin" model="ir.ui.view">
+      <field name="name">Inherited Res Config Settings Suggested Margin</field>
+      <field name="model">res.config.settings</field>
+      <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase"/>
+      <field name="arch" type="xml">
+          <xpath expr="//div[@name='purchase_setting_container']" position="inside">
+               <div class="col-12 col-lg-6 o_setting_box"
+                    title="El porcentaje de margen sugerido es para ser ingresado por defecto en cada proveedor para costeos.">
+                  <div class="o_setting_left_pane"/>
+                  <div class="o_setting_right_pane">
+                      <span class="o_form_label">Margen sugerido</span>
+                      <span class="fa fa-lg fa-building-o" title="Valores para ser ingresados por defecto en los proveedores de costeos."
+                            aria-label="El porcentaje de margen sugerido de aquí son para ser ingresados por defecto en cada proveedor para costeos."/>
+                      <div class="text-muted">
+                          Ingrese el porcentaje de margen sugerido para hacer los cálculos en los costeos.
+                      </div>
+                      <div class="content-group">
+                          <div class="row mt16">
+                              <label string="Margen sugerido" for="suggested_margin" class="col-lg-3 o_light_label"/>
+                              <field name="suggested_margin" force_save="1"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-12 col-lg-6 o_setting_box"
+                    title="El porcentaje marítimo será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos">
+                  <div class="o_setting_left_pane"/>
+                  <div class="o_setting_right_pane">
+                      <span class="o_form_label">Flete Marítimo</span>
+                      <span class="fa fa-lg fa-building-o" title="Valores para ser ingresados por defecto en los costeos."
+                            aria-label="El porcentaje marítimo de flete será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos."/>
+                      <div class="text-muted">
+                          Ingrese el porcentaje marítimo para flete que será tomado en cuenta de forma general.
+                      </div>
+                      <div class="content-group">
+                          <div class="row mt16">
+                              <label for="maritime_cost" class="col-lg-3 o_light_label"/>
+                              <field name="maritime_cost" force_save="1"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-12 col-lg-6 o_setting_box"
+                    title="El flete interno % en Estado Unidos será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos.">
+                  <div class="o_setting_left_pane"/>
+                  <div class="o_setting_right_pane">
+                      <span class="o_form_label">Flete Interno EE.UU.</span>
+                      <span class="fa fa-lg fa-building-o" title="Valores para ser ingresados por defecto en los costeos."
+                            aria-label="El flete interno % en Estado Unidos será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos."/>
+                      <div class="text-muted">
+                          Ingrese el flete interno % en Estado Unidos que será tomado en cuenta de forma general.
+                      </div>
+                      <div class="content-group">
+                          <div class="row mt16">
+                              <label for="internal_shipping_us" class="col-lg-3 o_light_label"/>
+                              <field name="internal_shipping_us" force_save="1"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-12 col-lg-6 o_setting_box"
+                    title="El porcentaje de seguro será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos.">
+                  <div class="o_setting_left_pane"/>
+                  <div class="o_setting_right_pane">
+                      <span class="o_form_label">Seguro Marítimo</span>
+                      <span class="fa fa-lg fa-building-o" title="Valores para ser ingresados por defecto en los proveedores de costeos."
+                            aria-label="El porcentaje marítimo de seguro será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos."/>
+                      <div class="text-muted">
+                          Ingrese el porcentaje de seguro marítimo que será tomado en cuenta de forma general.
+                      </div>
+                      <div class="content-group">
+                          <div class="row mt16">
+                              <label for="maritime_insurance_cost" class="col-lg-3 o_light_label"/>
+                              <field name="maritime_insurance_cost" force_save="1"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-12 col-lg-6 o_setting_box"
+                    title="El flete interno % será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos.">
+                  <div class="o_setting_left_pane"/>
+                  <div class="o_setting_right_pane">
+                      <span class="o_form_label">Flete Interno</span>
+                      <span class="fa fa-lg fa-building-o" title="Valores para ser ingresados por defecto en los proveedores de costeos."
+                            aria-label="El flete interno % será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos."/>
+                      <div class="text-muted">
+                          Ingrese el flete interno % que será tomado en cuenta de forma general.
+                      </div>
+                      <div class="content-group">
+                          <div class="row mt16">
+                              <label for="internal_shipping" class="col-lg-3 o_light_label"/>
+                              <field name="internal_shipping" force_save="1"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-12 col-lg-6 o_setting_box"
+                    title="El porcentaje aéreo será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos.">
+                  <div class="o_setting_left_pane"/>
+                  <div class="o_setting_right_pane">
+                      <span class="o_form_label">Flete Aéreo</span>
+                      <span class="fa fa-lg fa-building-o" title="Valores para ser ingresados por defecto en los costeos."
+                            aria-label="El porcentaje aéreo de flete será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos."/>
+                      <div class="text-muted">
+                          Ingrese el porcentaje aéreo de flete que será tomado en cuenta de forma general.
+                      </div>
+                      <div class="content-group">
+                          <div class="row mt16">
+                              <label for="air_cost" class="col-lg-3 o_light_label"/>
+                              <field name="air_cost" force_save="1"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-12 col-lg-6 o_setting_box"
+                    title="El porcentaje de seguro será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos.">
+                  <div class="o_setting_left_pane"/>
+                  <div class="o_setting_right_pane">
+                      <span class="o_form_label">Seguro Aéreo</span>
+                      <span class="fa fa-lg fa-building-o" title="Valores para ser ingresados por defecto en los proveedores de costeos."
+                            aria-label="El porcentaje aéreo de seguro será útil para cálculos del precio sugerido para ser ingresados por defecto en cada proveedor para costeos."/>
+                      <div class="text-muted">
+                          Ingrese el porcentaje de seguro aéreo que será tomado en cuenta de forma general.
+                      </div>
+                      <div class="content-group">
+                          <div class="row mt16">
+                              <label for="insurance_cost" class="col-lg-3 o_light_label"/>
+                              <field name="insurance_cost" force_save="1"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-12 col-lg-6 o_setting_box"
+                    title="La tasa de cambio de compra será útil para cálculos del precio sugerido para ser ingresados por defecto para cada costeo.">
+                  <div class="o_setting_left_pane"/>
+                  <div class="o_setting_right_pane">
+                      <span class="o_form_label">Tasa de Cambio</span>
+                      <span class="fa fa-lg fa-building-o" title="Valores para ser ingresados por defecto en los precios sugeridos de costeos."
+                            aria-label="La tasa de cambio de compra será útil para cálculos del precio sugerido para ser ingresados por defecto para cada costeo."/>
+                      <div class="text-muted">
+                          Ingrese la tasa de cambio de compra que será tomado en cuenta de forma general.
+                      </div>
+
+                      <div class="content-group">
+                          <div class="row mt16">
+                              <label for="rate" class="col-lg-3 o_light_label"/>
+                              <field name="rate" force_save="1"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </xpath>
+      </field>
+  </record>
+</odoo>

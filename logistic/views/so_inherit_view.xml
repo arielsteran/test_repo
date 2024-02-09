@@ -1,0 +1,14 @@
+    <data>
+        <record id="so_inherit_view" model="ir.ui.view">
+            <field name="name">sale.order.inherit.view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_cancel']" position="after">
+                    <button name="generate_po1" string="Generar PO1" type="object"/>
+                    <field name="company_po"/>     
+           </xpath>
+            </field>
+        </record>
+    </data>

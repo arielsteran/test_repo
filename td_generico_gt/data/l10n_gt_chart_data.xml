@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="contabilidad_gt" model="account.chart.template">
+            <field name="name">Plantilla Contable Guatemala (3Digital)</field>
+            <field name="bank_account_code_prefix">10010</field>
+            <field name="cash_account_code_prefix">10020</field>
+            <field name="transfer_account_code_prefix">100301</field>
+            <field name="code_digits">9</field>
+            <field name="currency_id" ref="base.GTQ"/>
+        </record>
+    </data>
+</odoo>

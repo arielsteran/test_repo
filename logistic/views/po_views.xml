@@ -1,0 +1,51 @@
+<odoo>
+    <!-- explicit list view PO -->
+    <record model="ir.ui.view" id="po_list_view">
+        <field name="name">Vista Lista - PO</field>
+        <field name="model">logistic.po</field>
+        <field name="arch" type="xml">
+            <tree string="PO" create="true" name="list_pos">
+                <field name="picking_id" string="WH/IN"/>
+                <field name="name"/>
+                <field name="merchandise_state"/>
+<!--                                    <field name="state"/>-->
+                <field name="so_id"/>
+                <field name="delivery_date"/>
+<!--                                    <field name="so_state"/>-->
+                <field name="wr_id" invisible="1"
+                       context="{
+                            'id': parent.id
+                        }"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- explicit form view PO -->
+    <record model="ir.ui.view" id="po_form_view">
+        <field name="name">Vista Formulario - PO</field>
+        <field name="model">logistic.po</field>
+        <field name="arch" type="xml">
+            <form string="PO" create="true" name="form_pos">
+                <field name="wr_id" invisible="1"
+                   context="{
+                        'id': parent.id
+                    }"/>
+
+                <group name="main_group_form_pos" readonly="1">
+                    <group name="purchase_group_form_pos">
+                        <field name="picking_id"/>
+                        <field name="name"/>
+                        
+<!--                                            <field name="state"/>-->
+                    </group>
+
+                    <group name="sale_group_form_pos">
+                        <field name="merchandise_state"/>
+                        <field name="so_id"/>
+<!--                                            <field name="so_state"/>-->
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

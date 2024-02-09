@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <data noupdate="1">
+        <!-- EXTRANJERO -->
+        <record model='account.fiscal.position.template' id='fiscal_position_template_exterior'>
+            <field name='name'>Exterior</field>
+            <field name="auto_apply" eval="False"/>
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+        </record>
+        <record model="account.fiscal.position.tax.template" id="fiscal_position_template_exterior_ventas" >
+            <field name="position_id" ref="fiscal_position_template_exterior"/>
+            <field name="tax_src_id" ref="impuestos_plantilla_iva_por_pagar"/>
+        </record>
+        <record model="account.fiscal.position.tax.template" id="fiscal_position_template_exterior_compras" >
+            <field name="position_id" ref="fiscal_position_template_exterior"/>
+            <field name="tax_src_id" ref="impuestos_plantilla_iva_por_cobrar"/>
+        </record>
+
+
+        <!-- EXENTO-->
+        <record model='account.fiscal.position.template' id='fiscal_position_template_exento'>
+            <field name='name'>Exento</field>
+            <field name="auto_apply" eval="False"/>
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+        </record>
+        <record model="account.fiscal.position.tax.template" id="fiscal_position_template_exento_ventas" >
+            <field name="position_id" ref="fiscal_position_template_exento"/>
+            <field name="tax_src_id" ref="impuestos_plantilla_iva_por_pagar"/>
+        </record>
+        <record model="account.fiscal.position.tax.template" id="fiscal_position_template_exento_compras" >
+            <field name="position_id" ref="fiscal_position_template_exento"/>
+            <field name="tax_src_id" ref="impuestos_plantilla_iva_por_cobrar"/>
+        </record>
+
+        <!-- PEQUEÑO CONTRIBUYENTE -->
+        <record model='account.fiscal.position.template' id='fiscal_position_template_peq_contribuyente'>
+            <field name='name'>Pequeño Contribuyente</field>
+            <field name="auto_apply" eval="False"/>
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+        </record>
+        <record model="account.fiscal.position.tax.template" id="fiscal_position_template_peq_contribuyente_compras" >
+            <field name="position_id" ref="fiscal_position_template_peq_contribuyente"/>
+            <field name="tax_src_id" ref="impuestos_plantilla_iva_por_cobrar"/>
+        </record>
+
+        <!-- PAGOS TRIMESTRALES -->
+        <record model='account.fiscal.position.template' id='fiscal_position_template_trimestral'>
+            <field name='name'>Sujeto a Pagos Trimestrales</field>
+            <field name="auto_apply" eval="False"/>
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+        </record>
+
+        <!-- RETENCIÓN DEFINITIVA -->
+        <record model='account.fiscal.position.template' id='fiscal_position_template_retencion_definitiva'>
+            <field name='name'>Sujeto a Retención Definitiva</field>
+            <field name="auto_apply" eval="False"/>
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+        </record>
+
+        <!-- FACTURA ESPECIAL -->
+        <record model='account.fiscal.position.template' id='fiscal_position_template_factura_especial'>
+            <field name='name'>Factura Especial</field>
+            <field name="auto_apply" eval="False"/>
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+        </record>
+        <record model="account.fiscal.position.tax.template" id="fiscal_position_template_factura_especial_compra" >
+            <field name="position_id" ref="fiscal_position_template_factura_especial"/>
+            <field name="tax_src_id" ref="impuestos_plantilla_iva_por_cobrar"/>
+        </record>
+
+        <!-- AGENTE RETENEDOR DE IVA 15% -->
+        <record model='account.fiscal.position.template' id='fiscal_position_template_retenedor_iva15'>
+            <field name='name'>Agente Retenedor de IVA 15%</field>
+            <field name="auto_apply" eval="False"/>
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+        </record>
+        <record model="account.fiscal.position.tax.template" id="fiscal_position_template_retenedor_iva15_iva" >
+            <field name="position_id" ref="fiscal_position_template_retenedor_iva15"/>
+            <field name="tax_src_id" ref="impuestos_plantilla_iva_por_pagar"/>
+            <field name="tax_dest_id" ref="impuestos_plantilla_iva_retenido_15"/>
+        </record>
+    </data>
+
+</odoo>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--<data noupdate="1">-->
+    <data>
+        <!-- Compras e IVA por Cobrar -->
+
+        <record id="impuestos_plantilla_iva_por_cobrar" model="account.tax.template">
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+            <field name="name">IVA por Cobrar</field>
+            <field name="description">IVA por Cobrar</field>
+            <field name="amount" eval="12"/>
+            <field name="amount_type">percent</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="price_include" eval="True"/>
+            <field name="tax_group_id" ref="tax_group_iva_12"/>
+            <field name="invoice_repartition_line_ids" eval="[(5,0,0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_110301'),
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_110301'),
+                }),
+            ]"/>
+        </record>
+
+        <!-- Ventas e IVA por Pagar -->
+
+        <record id="impuestos_plantilla_iva_por_pagar" model="account.tax.template">
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+            <field name="name">IVA por Pagar</field>
+            <field name="description">IVA por Pagar</field>
+            <field name="amount" eval="12"/>
+            <field name="amount_type">percent</field>
+            <field name="type_tax_use">sale</field>
+            <field name="price_include" eval="True"/>
+            <field name="tax_group_id" ref="tax_group_iva_12"/>
+            <field name="invoice_repartition_line_ids" eval="[(5,0,0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_210201'),
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_210201'),
+                }),
+            ]"/>
+        </record>
+
+        <!-- IDP -->
+
+        <record id="impuestos_plantilla_idp_super" model="account.tax.template">
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+            <field name="name">IDP Super</field>
+            <field name="description">IDP Super</field>
+            <field name="amount" eval="4.70"/>
+            <field name="amount_type">fixed</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="price_include" eval="True"/>
+            <field name="tax_group_id" ref="tax_group_idp"/>
+            <field name="invoice_repartition_line_ids" eval="[(5,0,0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_620201'),
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_620201'),
+                }),
+            ]"/>
+        </record>
+
+        <record id="impuestos_plantilla_idp_regular" model="account.tax.template">
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+            <field name="name">IDP Regular</field>
+            <field name="description">IDP Regular</field>
+            <field name="amount" eval="4.60"/>
+            <field name="amount_type">fixed</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="price_include" eval="True"/>
+            <field name="tax_group_id" ref="tax_group_idp"/>
+            <field name="invoice_repartition_line_ids" eval="[(5,0,0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_620201'),
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_620201'),
+                }),
+            ]"/>
+        </record>
+
+        <record id="impuestos_plantilla_idp_diesel" model="account.tax.template">
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+            <field name="name">IDP Diesel</field>
+            <field name="description">IDP Diesel</field>
+            <field name="amount" eval="1.30"/>
+            <field name="amount_type">fixed</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="price_include" eval="True"/>
+            <field name="tax_group_id" ref="tax_group_idp"/>
+            <field name="invoice_repartition_line_ids" eval="[(5,0,0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_620201'),
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_620201'),
+                }),
+            ]"/>
+        </record>
+
+        <record id="impuestos_plantilla_iva_retenido_15" model="account.tax.template">
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+            <field name="name">IVA Retenido 15%</field>
+            <field name="description">IVA Retenido 15%</field>
+            <field name="python_compute">result = -(price_unit / 1.12) * 0.12 * 0.15</field>
+            <field name="amount_type">code</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="price_include" eval="True"/>
+            <field name="tax_group_id" ref="tax_group_iva_12"/>
+            <field name="invoice_repartition_line_ids" eval="[(5,0,0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_110301'),
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_110301'),
+                }),
+            ]"/>
+        </record>
+
+        <record id="impuestos_plantilla_isr_retenido" model="account.tax.template">
+            <field name="chart_template_id" ref="contabilidad_gt"/>
+            <field name="name">ISR Retenido Proveedores</field>
+            <field name="description">Retencion ISR</field>
+            <field name="python_compute">if price_unit > 2500:
+     if price_unit >=30000:
+          result = -(1500 + (((price_unit / 1.12) - 30000)  * .07))
+     else:
+          result = -price_unit / 1.12 * .05
+else:
+     result = 0
+            </field>
+            <field name="amount_type">code</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="price_include" eval="True"/>
+            <field name="tax_group_id" ref="tax_group_isr"/>
+            <field name="invoice_repartition_line_ids" eval="[(5,0,0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_210202'),
+                }),
+            ]"/>
+            <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'base',
+                }),
+                (0,0, {
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': ref('cta_gt_210202'),
+                }),
+            ]"/>
+        </record>
+
+        <function model="account.chart.template" name="try_loading">
+            <value eval="[ref('contabilidad_gt')]"/>
+        </function>
+    </data>
+</odoo>

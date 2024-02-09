@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_all_logistic_wr,Acceso total a WR,model_logistic_wr,logistic.group_logistic_manager,1,1,1,1
+access_all_logistic_po,Acceso total a PO,model_logistic_po,logistic.group_logistic_manager,1,1,1,1
+access_all_logistic_bundle,Acceso total a Bultos,model_logistic_bundle,logistic.group_logistic_manager,1,1,1,1
+access_all_logistic_merchandise,Acceso total a Mercaderia,model_logistic_merchandise,logistic.group_logistic_manager,1,1,1,1
+access_all_logistic_packaging,Acceso total a Embalaje,model_logistic_packaging,logistic.group_logistic_manager,1,1,1,1
+access_all_logistic_conmer,Acceso total a CONMER,model_logistic_conmer,logistic.group_logistic_manager,1,1,1,1
+access_all_logistic_alert,Acceso total a ALERT,model_logistic_alert,logistic.group_logistic_manager,1,1,1,1
+access_all_shipping_cost,Acceso total a Gastos,model_shipping_cost,logistic.group_logistic_manager,1,1,1,1
+
+access_logistic_wr,Acceso a WR,model_logistic_wr,logistic.group_logistic_user,1,1,1,1
+access_logistic_po,Acceso a PO,model_logistic_po,logistic.group_logistic_user,1,1,1,1
+access_logistic_bundle,Acceso a Bultos,model_logistic_bundle,logistic.group_logistic_user,1,1,1,1
+access_logistic_merchandise,Acceso a Mercaderia,model_logistic_merchandise,logistic.group_logistic_user,1,1,1,1
+access_logistic_packaging,Acceso a Embalaje,model_logistic_packaging,logistic.group_logistic_user,1,1,1,1
+access_logistic_conmer,Acceso a CONMER,model_logistic_conmer,logistic.group_logistic_user,1,1,1,1

@@ -1,0 +1,17 @@
+<odoo>
+    <record model="ir.ui.view" id="update_expensive_view">
+        <field name="name">update.expensive.view</field>
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_ids']" position="after">
+                <field name="alert_inherit"/>
+                <button name="create_expenses" type="object" class="btn-link">
+                    <span class="fa fa-plus-square"/>
+                    Generar gastos desde alertas
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

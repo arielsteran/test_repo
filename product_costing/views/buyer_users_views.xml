@@ -1,0 +1,57 @@
+<odoo>
+  <record model="ir.ui.view" id="view_tree_buyer_users">
+      <field name="name">Vista Lista - Compradores por Categoría de Productos</field>
+      <field name="model">res.users</field>
+      <field name="arch" type="xml">
+          <tree>
+              <field name="company_id" invisible="1"/>
+              <field name="name"/>
+              <field name="product_category_ids" widget="many2many_tags"/>
+          </tree>
+      </field>
+  </record>
+
+  <record model="ir.ui.view" id="view_form_buyer_users">
+      <field name="name">Vista Formulario - Compradores por Categoría de Productos</field>
+      <field name="model">res.users</field>
+      <field name="arch" type="xml">
+          <form string="Costeos" create="false">
+              <sheet>
+                  <group>
+                      <group>
+                          <field name="company_id" invisible="1"/>
+                          <field name="name" invisible="1"/>
+
+                          <group name="product_categories" style="display: block; width: 100%;">
+                              <field name="product_category_ids" widget="many2many_tags"/>
+                          </group>
+                      </group>
+                  </group>
+              </sheet>
+          </form>
+      </field>
+  </record>
+
+     <!-- actions opening views on models -->
+  <record model="ir.actions.act_window" id="product_costing.action_menu_buyer_users">
+      <field name="name">Compradores por Categoría de Productos</field>
+      <field name="res_model">res.users</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('id','=', uid)]</field>
+      <field name="context">
+          {'tree_view_ref': 'product_costing.view_tree_buyer_users',
+           'form_view_ref': 'product_costing.view_form_buyer_users'}
+      </field>
+      <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+              No hay Compradores por Categoría de Productos
+          </p>
+      </field>
+  </record>
+
+  <menuitem name="Compradores por Categoría de Productos"
+       id="product_costing_buyer_users"
+       parent="purchase.menu_purchase_config"
+       action="product_costing.action_menu_buyer_users"
+       sequence="11"/>
+</odoo>

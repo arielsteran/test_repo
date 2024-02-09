@@ -1,0 +1,117 @@
+<odoo>
+    <data>
+        <report id="report_alert"
+                string="Reporte de Alerta"
+                model="logistic.alert"
+                report_type="qweb-pdf"
+                name="logistic.report_alert_template"
+        />
+        <template id="report_alert_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout_logistic">
+                        <div class="page">
+                            <h1>
+                                        <span t-field="o.name"/> - <span t-field="o.reference"></span>
+                                    </h1>
+                                    <br/>
+                            <div id="mix_tags">
+                                <div style="width:10%;float:left;">
+                                <strong>Fecha Preparado:</strong><br/>
+                                <span class="m-0" t-field="o.prepared_date"/>
+                                </div>
+                                <div style="width:10%;float:left;">
+                                    <strong>Fecha Despacho: </strong>
+                                        <field name="o.dispatch_date"/>
+                                </div>
+                                <!--<div style="width:20%;float:right;">-->
+                                <!--    <strong>Referencia: </strong>-->
+                                <!--        <field name="o.reference"/>-->
+                                <!--</div>-->
+                                <div style="width:10%;float:left;">
+                                    <strong>GUIA:</strong><br/>
+                                    <span t-field="o.guide_BL"/>
+                                </div>
+                                <div style="width:60%;float:left;">
+                                    <strong>Consignatario:</strong><br/>
+                                    <span t-field="o.consignee_id.name" t-if="o.consignee_id.name"/><br t-if="o.consignee_id.name"/>
+                                    <span t-field="o.consignee_id.street" t-if="o.consignee_id.street"/><br t-if="o.consignee_id.street"/>
+                                    <span t-field="o.consignee_id.email" t-if="o.consignee_id.email"/><br t-if="o.consignee_id.email"/>
+                                    <span t-field="o.consignee_id.phone"/>
+                                </div>
+                            </div>
+                            <t t-set="total_bundles" t-value="0"/>
+                            <t t-set="total_weight" t-value="0"/>
+                            <t t-foreach="o.wh_linked" t-as="line">
+                              <t t-foreach="line.bundle_ids" t-as="bundles">
+                                <t t-set="total_bundles" t-value="total_bundles + bundles.quantity"/>
+                                <t t-set="total_weight" t-value="total_weight + bundles.weight"/>
+                              </t>
+                            </t>
+
+                            <div>
+                                <p><strong>Transportista: </strong><span t-field="o.carrier_id"/></p>
+                                <p><strong>Transporte: </strong><span t-field="o.transport_type"/></p>
+                            </div>
+
+                            <br/>
+                            <br/>
+
+                            <div>
+                              <p><strong>Total Cajas: <span t-esc="total_bundles"/></strong></p>
+                              <p><strong>Total Peso: <span t-esc="total_weight"/></strong></p>
+                            </div>
+
+                            <br/>
+                            <table class="table table-sm o_main_table" style="border-bottom:#1ca782 1px solid;">
+                                    <thead>
+                                        <tr>
+                                            <th name="WR´s #" class="text-left">
+                                                Referencia
+                                            </th>
+                                            <th name="th_cuantity" class="text-left">
+                                                Cliente
+                                            </th>
+                                            <th name="th_type" class="text-left">
+                                                Proveedor
+                                            </th>
+                                            <th name="th_witdh" class="text-left">
+                                                Cajas
+                                            </th>
+                                            <th name="th_long" class="text-left">
+                                                peso
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.wh_linked" t-as="line">
+                                        <t t-foreach="line.bundle_ids" t-as="bundles">
+                                            <tr>
+                                                <td>
+                                                    <span class="text-center" t-field="line.name"/>
+                                                </td>
+                                                <td>
+                                                    <span class="text-center" t-field="line.supplier_id"/>
+                                                </td>
+                                                <td>
+                                                    <span class="text-center" t-field="line.consignee_id"/>
+                                                </td>
+                                                <td>
+                                                    <span class="text-center" t-field="bundles.quantity"/>
+                                                </td>
+                                                <td>
+                                                    <span class="text-center" t-field="bundles.weight"/>
+                                                </td>
+
+                                            </tr>
+                                        </t>
+                                        </t>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

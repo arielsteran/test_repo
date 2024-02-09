@@ -1,0 +1,183 @@
+<odoo>
+    <data>
+        <report id="report_warehouse"
+                string="Reporte de Warehouse"
+                model="logistic.wr"
+                report_type="qweb-pdf"
+                name="logistic.report_warehouse_template"
+        />
+        <template id="report_warehouse_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout_logistic">
+                        <div class="page">
+                            <h1>
+                                <span t-field="o.name"/>
+                            </h1>
+                            <br/>
+
+
+                            <group>
+                            <group>Proveedor: <span t-field="o.supplier_id"/></group>
+                            <group style="margin-left:100px">Consignatario: <span t-field="o.consignee_id"/>
+                            </group>
+                                
+                            </group>
+
+                            
+                            <table>
+                              <tr>             
+                              <td>
+                                Fecha: <span t-field="o.prepared_date"/><br/>
+                                Tipo: <span t-field="o.type"/><br/>
+                                Transporte: <span t-field="o.transport_type"/><br/>
+                            </td>
+                            
+                                </tr>                              
+                              
+                                
+                              
+                            </table>
+  
+
+                            <br/>
+                            <table class="table table-sm o_main_table" style="margin-top:40px;border-bottom:#1ca782 1px solid;" attrs="{'invisible':[('type', '=', spare_parts)]}">
+                                <thead>
+                                    <tr>
+                                        <th name="th_cuantity" class="text-left">
+                                            Cantidad
+                                        </th>
+                                        <th name="th_type" class="text-left">
+                                            Tipo
+                                        </th>
+                                        <th name="th_height" class="text-left">
+                                            Ancho
+                                        </th>
+                                        <th name="th_long" class="text-left">
+                                            Largo
+                                        </th>
+                                        <th name="th_witdh" class="text-left">
+                                            Alto
+                                        </th>
+                                        <th name="th_weight" class="text-left">
+                                            Peso
+                                        </th>
+                                        <th name="th_weight" class="text-left">
+                                            Volumen
+                                        </th>
+                                        <th name="th_vol_height" class="text-left">
+                                            Peso Volumetrico
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="pieces" t-value="0"/>
+                                    <t t-set="weight" t-value="0"/>
+                                    <t t-set="volume" t-value="0"/>
+                                    <t t-set="volumetric_weight" t-value="0"/>
+                                    <t t-foreach="o.bundle_ids" t-as="line">
+                                      <t t-set="pieces" t-value="pieces + line.quantity"/>
+                                      <t t-set="weight" t-value="weight + line.weight"/>
+                                      <t t-set="volume" t-value="volume + line.volume"/>
+                                      <t t-set="volumetric_weight" t-value="volumetric_weight + line.volumetric_weight"/>
+                                        <tr>
+                                            <td>
+                                                <span class="text-center" t-field="line.quantity"/>
+                                            </td>
+                                            <td>
+                                                <span class="text-center" t-field="line.packaging_id"/>
+                                            </td>
+                                            <td>
+                                                <span class="text-center" t-field="line.width"/>
+                                            </td>
+                                            <td>
+                                                <span class="text-center" t-field="line.length"/>
+                                            </td>
+                                            <td>
+                                                <span class="text-center" t-field="line.height"/>
+                                            </td>
+                                            <td>
+                                                <span class="text-center" t-field="line.weight"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="'{0:,.2f}'.format(float(line.volume))"/>
+                                            </td>
+                                            <td>
+                                                <span class="text-center" t-field="line.volumetric_weight"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <table style="border-style: solid; border-width: 1px; border-color:#1ca782" id="contenedor" class="container">
+                                <tr>
+                                  <td>
+                                    <h6>Pieces: <t t-esc="pieces"/></h6>
+                                <h6>Weight: <t t-esc="weight"/></h6>
+                                <h6>Volume: <t t-esc="volumetric_weight"/></h6>
+                                <h6>Volumetric Weight: <t t-esc="volumetric_weight"/></h6>
+                            
+                                  </td>
+                                  <td>
+                                    <br/>
+                                  </td>
+                                  <td class="text-center">
+                                    <br/>
+                                      File #  _____________<br/><br/>
+                                      Date    _____________
+                                  </td>
+                                </tr>
+                              </table>
+                            <br/>
+                            <div t-if="o.po_ids">
+                            <strong><h2>Referencia</h2></strong>
+                            <table class="table table-sm o_main_table" style="margin-top:40px;border-bottom:#1ca782 1px solid;">
+                                <thead>
+                                    <tr>
+                                        <th name="th_cuantity" class="text-left">
+                                            WH/IN
+                                        </th>
+                                        <th name="th_cuantity" class="text-left">
+                                            PO
+                                        </th>
+                                        <th name="th_cuantity" class="text-left">
+                                            Mercadería
+                                        </th>
+                                        <th name="th_cuantity" class="text-left">
+                                            SO
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.po_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span class="text-center" t-field="line.picking_id"/>
+                                            </td>
+                                            <td>
+                                                <span class="text-center" t-field="line.name"/>
+                                            </td>
+                                            <td>
+                                                <span class="text-center" t-field="line.merchandise_state"/>
+                                            </td>
+                                            <td>
+                                                <span class="text-center" t-field="line.so_id"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div t-if="o.note">
+                                <h5>Notas</h5>
+                                <span t-field="o.note"/>
+                            </div>                        </div>                        
+                        </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

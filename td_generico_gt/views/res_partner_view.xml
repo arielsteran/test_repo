@@ -1,0 +1,69 @@
+<odoo>
+
+      <record id="view_partner_gt" model="ir.ui.view">
+        <field name="name">res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+          <xpath expr="//*[@name='type']" position="before">
+            <field name = "legal_name"/>
+          </xpath>
+
+          <xpath expr="//form/div" position="after">
+            <div class="alert alert-warning oe_edit_only" role="alert" attrs="{'invisible': [('same_vat_partner_id', '=', False)]}">
+                  Un cliente con la misma <span><span class="o_vat_label">Razón Social</span></span> ya existe (<field name="same_vat_partner_id"/>), está seguro que desea crear uno nuevo?
+            </div>
+          </xpath>
+            
+<!--          VISTA PARA CAMBIOS EN CONTACTOS, CAMBIAR DE LUGAR  EL NIT-->
+<!--          <xpath expr="//field[@name='legal_name']" position="after">-->
+<!--              <label for="l10n_latam_identification_type_id" string="Número de Identificación"/>-->
+<!--              <div name="latam_vat">-->
+<!--                  <field name="l10n_latam_identification_type_id" options="{'no_open': True, 'no_create': True}"-->
+<!--                         placeholder="Tipo" attrs="{'readonly': [('parent_id','!=',False)]}" class="oe_inline" domain="country_id and ['|', ('country_id', '=', False), ('country_id', '=', country_id)] or []" required="True"/>-->
+<!--                  <span class="oe_read_only"> - </span>-->
+<!--                  <field name="vat" placeholder="NIT" class="oe_inline" attrs="{'readonly': [('parent_id','!=',False)]}"/>-->
+<!--              </div>-->
+<!--          </xpath>-->
+        </field>
+      </record>
+
+      <record id="view_res_partner_filter" model="ir.ui.view">
+          <field name="name">Herencia de vista de búsqueda para agregar filtros para tarifas de ventas</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_res_partner_filter"/>
+          <field name="arch" type="xml">
+               <field name="category_id" position="after">
+                  <field name="property_product_pricelist" filter_domain="[('property_product_pricelist', 'ilike', self)]"/>
+               </field>
+
+              <filter name="group_country" position="after">
+                  <filter name="group_property_product_pricelist" string="Tarifas" context="{'group_by': 'property_product_pricelist'}"/>
+              </filter>
+          </field>
+      </record>
+
+<!--          VISTA PARA CAMBIOS EN CONTACTOS, CAMBIAR DE LUGAR  EL NIT-->
+<!--      <record id="view_partner_invisible_latam_vat" model="ir.ui.view">-->
+<!--        <field name="name">Herencia a vista Latam para cambio de posición de NIT</field>-->
+<!--        <field name="model">res.partner</field>-->
+<!--&lt;!&ndash;        <field name="type">form</field>&ndash;&gt;-->
+<!--        <field name="inherit_id" ref="l10n_latam_base.view_partner_latam_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--          <xpath expr="//label[@for='l10n_latam_identification_type_id']" position="attributes">-->
+<!--             <attribute name="invisible">1</attribute>-->
+<!--          </xpath>-->
+<!--          <xpath expr="//div/field[@name='l10n_latam_identification_type_id']" position="attributes">-->
+<!--             <attribute name="invisible">1</attribute>-->
+<!--          </xpath>-->
+<!--          <xpath expr="//div/span[hasclass('oe_read_only')]" position="attributes">-->
+<!--             <attribute name="invisible">1</attribute>-->
+<!--          </xpath>-->
+<!--          <xpath expr="//div/field[@name='vat']" position="attributes">-->
+<!--             <attribute name="invisible">1</attribute>-->
+<!--          </xpath>-->
+<!--        </field>-->
+<!--      </record>-->
+
+</odoo>

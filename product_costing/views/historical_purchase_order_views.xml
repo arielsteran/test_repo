@@ -1,0 +1,13 @@
+<odoo>
+  <record model="ir.ui.view" id="view_tree_historical_purchase_order">
+      <field name="name">Vista Lista - Histórico de línea de pedido de compra</field>
+      <field name="model">purchase.order.line</field>
+      <field name="arch" type="xml">
+          <tree create="0">
+              <field name="date_approve"/>
+              <field name="supplier_id"/>
+              <field name="price_unit" string="Costo"/>
+          </tree>
+      </field>
+  </record>
+</odoo>
