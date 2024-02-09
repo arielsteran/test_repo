@@ -7,18 +7,17 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
 
-        <xpath expr="//field[@name='consignment_transfer_id']" position="after">
-                <field name="create_po_bool" string="Crear PO"/>
-                <field name="company_generate_po" attrs="{'invisible': [('create_po_bool', '=', False)]}"/>
-                <field name="change_products_po_alert"  attrs="{'invisible': [('change_products_po_alert', '=', False)]}"/>
+       <!-- <xpath expr="//field[@name='consignment_transfer_id']" position="after">
+            <field name="create_po_bool" string="Crear PO"/>
+            <field name="company_generate_po" attrs="{'invisible': [('create_po_bool', '=', False)]}"/>
+            <field name="change_products_po_alert"  attrs="{'invisible': [('change_products_po_alert', '=', False)]}"/>
+        </xpath>-->
 
-        </xpath>
-
-        <xpath expr="//header" position="after">
+        <!--<xpath expr="//header" position="after">
           <div name="cut_off" class="alert alert-warning" role="alert" attrs="{'invisible': [('change_products_po_alert', '=', False)]}">
             Se han Modificado los productos en la orden de compra generado desde esta orden de venta.
           </div>
-        </xpath>
+        </xpath>-->
 
         <xpath expr="//tree/field[@name='product_template_id']" position="after">
           <field name="default_code" string="No. Parte"/>

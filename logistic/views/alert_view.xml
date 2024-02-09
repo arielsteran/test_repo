@@ -22,7 +22,7 @@
             <search string="Search Invoice">
                 <field name="name"/>
                 <field name="reference"
-                filter_domain="[('search_date','ilike',self)]"/>
+                filter_domain="[('dispatch_date','ilike',self)]"/>
         </search>
         </field>
     </record>

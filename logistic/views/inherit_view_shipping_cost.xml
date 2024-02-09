@@ -27,7 +27,7 @@
               <field name="exchange_rate"/>
             </xpath>
             <xpath expr="//field[@name='amount_total']" position="before">
-                <field name="total_usd_price" widget="moneraty"/>
+                <field name="total_usd_price" widget="monetary"/>
                 <field name="total_dai_aditional_cost" widget="monetary"/>
             </xpath>
             <xpath expr="//field[@name='valuation_adjustment_lines']" position="after">

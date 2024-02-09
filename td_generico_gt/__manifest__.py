@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': "Tropicalización para Guatemala",
 
@@ -30,14 +29,15 @@
         'data/account_fiscal_template.xml',
         'data/res_country_group_data.xml',
         'data/account_chart_template_data.xml',
-        'views/account_account_view.xml',
         'views/account_move_view.xml',
+        'views/account_account_view.xml',
         'views/account_payment_view.xml',
         'views/res_currency_view.xml',
         'views/res_partner_view.xml',
         'views/td_generico_invoice_view.xml',
         'views/inherit_res_config_settings_account_views.xml',
-        'views/invoice_cancel_view.xml',
+        # 'views/invoice_cancel_view.xml',
       ],
 
 }
+# -*- coding: utf-8 -*-

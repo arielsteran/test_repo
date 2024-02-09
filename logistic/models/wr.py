@@ -213,7 +213,7 @@ class WR(models.Model):
             for wh in wr.picking_id:
                 for so_lines in wh.move_ids_without_package:
                     for taxes in so_lines.purchase_line_id.sale_line_id.sudo().product_id.supplier_taxes_id:
-                        if taxes.group_type == "dai":
+                        if taxes.amount_type == "fixed":
                             factor_compute = taxes.logistic_factor
 
                     vals = {

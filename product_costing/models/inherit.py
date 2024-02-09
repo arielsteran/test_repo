@@ -468,7 +468,6 @@ class SaleOrderLineInherited(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Acuerdo de Compra para ' + self.order_id.name + ' - ' + self.name,
             'res_model': 'purchase.requisition',
-            'view_type': 'form',
             'view_mode': 'form',
             'view_id': view.id,
             'views': [(view.id, 'form')],
@@ -478,7 +477,7 @@ class SaleOrderLineInherited(models.Model):
                                                'product_uom_id': 1, 'schedule_date': False,
                                                'account_analytic_id': False, 'price_unit': 0}]]
                         },
-            'flags': {'initial_mode': 'edit'},
+            # 'flags': {'initial_mode': 'edit'},
             'target': 'new',
         }
 

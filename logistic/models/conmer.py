@@ -8,7 +8,7 @@ class Conmer(models.Model):
     _name = 'logistic.conmer'
     _order = "search_date desc, id desc"
     _description = 'CONMER'
-    _order = 'date_search desc,id desc'
+    _order = 'date_search desc, id desc'
 
     name = fields.Char(string="# Referencia")
 

@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-# Copyright 2019 EquickERP
-#
-##############################################################################
-
 
 from odoo import api, fields, models, _
 from datetime import datetime, date, timedelta
@@ -37,14 +31,15 @@ class SaleOrderLine(models.Model):
     dispatch_date = fields.Date(string="Delivery Date")
     select_so_lines = fields.Boolean(string="Select", copy=False)
 
-    @api.onchange('product_id')
-    def product_id_change(self):
-        domain = super(SaleOrderLine, self).product_id_change()
-        self.dispatch_date = False
-        if self.product_id:
-            dispatch_date = date.today() + timedelta(days=self.customer_lead)
-            self.dispatch_date = dispatch_date
-        return domain
+    # TODO: Removed method in Odoo 16.0
+    # @api.onchange('product_id')
+    # def product_id_change(self):
+    #     domain = super(SaleOrderLine, self).product_id_change()
+    #     self.dispatch_date = False
+    #     if self.product_id:
+    #         dispatch_date = date.today() + timedelta(days=self.customer_lead)
+    #         self.dispatch_date = dispatch_date
+    #     return domain
 
     def _prepare_procurement_values(self, group_id=False):
         res = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
@@ -77,7 +72,7 @@ class stock_move(models.Model):
                 ('state', 'in', ['draft', 'confirmed', 'waiting', 'partially_available', 'assigned'])]
 
         if self.sale_line_id and self.sale_line_id.dispatch_date:
-            domain += [('scheduled_date', '=', self.date_expected)]
+            domain += [('scheduled_date', '=', self.date)]
         picking = self.env['stock.picking'].search(domain, limit=1)
         return picking
 
@@ -145,5 +140,3 @@ class wizard_sale_dispatch_date(models.TransientModel):
         for so_line in self.sale_line_ids:
             so_line.dispatch_date = self.date
             so_line.select_so_lines = False
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
